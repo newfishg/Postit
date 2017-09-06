@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action :require_same_user, only: [:edit, :update]
 
+
   def show
   end
 
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(slug: params[:id])
   end
 
   def user_params
@@ -48,8 +49,6 @@ class UsersController < ApplicationController
     if current_user != @user
       flash[:error] = "You're not allowed to do that."
       redirect_to root_path
-    else
-      render :edit
     end
   end
 end
